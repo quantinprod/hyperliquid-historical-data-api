@@ -43,16 +43,21 @@ def get_hl_data(coin="BTC", days_back=30, resolution="1h"):
 
 # --- EXAMPLE USAGE ---
 if __name__ == "__main__":
-    # Example 1: Get the last 14 days of hourly WIF data
+    # Example 1: Get the last 14 days of hourly WIF data for backtesting
     wif_df = get_hl_data(coin="WIF", days_back=14, resolution="1h")
     if wif_df is not None:
         print("\n--- WIF Hourly Data ---")
         print(wif_df.head())
-        print(f"\nSuccessfully fetched {len(wif_df)} data points for WIF.")
 
-    # Example 2: Get the last 2 days of 1-minute TST data
-    tst_df = get_hl_data(coin="TST", days_back=2, resolution="1m")
-    if tst_df is not None:
-        print("\n--- TST 1-Minute Data ---")
-        print(tst_df.head())
-        print(f"\nSuccessfully fetched {len(tst_df)} data points for TST.")
+    # Example 2: Ping the Live Opportunities Endpoint
+    print("\n--- Live Funding Opportunities ---")
+    url_opps = f"https://{API_HOST}/api/v1/opportunities"
+    headers = {"x-rapidapi-host": API_HOST, "x-rapidapi-key": API_KEY}
+    params_opps = {"min_funding_rate": 0.0001, "min_oi": 1000000}
+    
+    res = requests.get(url_opps, headers=headers, params=params_opps)
+    if res.status_code == 200:
+        opps_data = res.json()
+        print(f"Found {opps_data['opportunities_found']} coins in the Danger Zone:")
+        for coin in opps_data['data']:
+            print(f"[{coin['suggested_trade']}] {coin['coin']} | Funding: {coin['funding_rate_pct_per_hour']}%/hr | OI: ${coin['close_open_interest']:,.0f}")
