@@ -14,7 +14,6 @@ Want to test the data quality instantly? I've open-sourced a 10-day sample of hi
 If you want the full 60+ day archive or a live data feed for production trading, you can access my PostgreSQL database via RapidAPI.
 *   **1m, 15m, 1h, 1d aggregates**
 *   **Live Funding Opportunities Endpoint**
-*   **Liquidation Heatmaps**
 
 👉 **[Get Your API Key Here (100 Free Calls/Mo)](https://rapidapi.com/jereful/api/hyperliquid-historical-funding-oi)**
 
